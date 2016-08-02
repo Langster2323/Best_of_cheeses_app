@@ -1,7 +1,7 @@
 class CreateCheeses < ActiveRecord::Migration[5.0]
   def change
     create_table :cheeses do |t|
-      t.string :type
+      t.string :name
       t.belongs_to :user
 
       t.timestamps
