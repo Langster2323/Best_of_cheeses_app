@@ -41,6 +41,8 @@
 # end
 
 usernames.each do |username|
-  User.create!(username: username, password_digest: "password")
-  Cheese.create!(name: name)
+  user = User.create!(username: username, password_digest: "password")
+  name.each do |n|
+    Cheese.create!(name: n, user: user)
+  end
 end
