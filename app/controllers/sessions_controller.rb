@@ -1,11 +1,27 @@
 class SessionsController < ApplicationController
-  def login
+  def sign_in
+  end
+
+  def create
     user = User.find_by(username: params[:username])
-    if user.present? && user.authenticate(params.fetch(:password))
-      render json: {authtoken: user.authtoken, user_id: user.id}, status: 200
-    # render json: {authtoken: user.authtoken}
+
+    if user.present?
+      if user.authenticate(params[:password])
+        session[:user_id] = user.id
+        flash[:notice] = "Successfully signed in!"
+        redirect_to root_path
+      else
+        flash[:alert] = "Username and password did not match any records"
+        render :sign_in
+      end
     else
-      render json: { message: "Not found"}, status: 401
+      flash[:alert] = "Username and password did not match any records"
+      render :sign_in
     end
+  end
+
+  def destroy
+    session[:user_id] = nil
+    redirect_to root_path
   end
 end

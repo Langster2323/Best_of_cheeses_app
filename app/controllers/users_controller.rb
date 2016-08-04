@@ -48,6 +48,12 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    if User.exists?(params[:id])
+      User.destroy(params[:id])
+      render message: "User deleted."
+    else
+      render message: "User not found."
+    end
   end
 
   private
